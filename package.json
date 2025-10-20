@@ -1,0 +1,43 @@
+{
+  "name": "medi-ai-suite",
+  "version": "1.0.0",
+  "description": "Comprehensive healthtech application with AI-powered wound detection, medicine scanning, and emergency response",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "install:all": "yarn install && yarn workspace mobile install && yarn workspace web install && yarn workspace backend install",
+    "dev": "concurrently \"yarn workspace mobile start\" \"yarn workspace web start\" \"yarn workspace backend start\"",
+    "build": "yarn workspace mobile build && yarn workspace web build",
+    "test": "yarn workspace mobile test && yarn workspace web test && yarn workspace backend test",
+    "lint": "yarn workspace mobile lint && yarn workspace web lint && yarn workspace backend lint",
+    "deploy": "yarn workspace mobile deploy && yarn workspace web deploy && yarn workspace backend deploy"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "lerna": "^7.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/medi-ai-suite.git"
+  },
+  "keywords": [
+    "healthtech",
+    "ai",
+    "medical",
+    "wound-detection",
+    "medicine-scanner",
+    "emergency-response",
+    "react-native",
+    "expo",
+    "flask",
+    "firebase"
+  ],
+  "author": "Medi-AI Team",
+  "license": "MIT"
+}

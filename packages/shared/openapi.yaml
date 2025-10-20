@@ -1,0 +1,177 @@
+openapi: 3.0.0
+info:
+  title: Medi-AI Suite API
+  description: REST API for Medi-AI Suite healthtech application
+  version: 1.0.0
+  contact:
+    name: Medi-AI Team
+    email: support@medi-ai.com
+
+servers:
+  - url: http://localhost:5000/api
+    description: Development server
+  - url: https://api.medi-ai.com/api
+    description: Production server
+
+paths:
+  /ml/wound:
+    post:
+      summary: Process wound image
+      description: Analyze wound image using AI/ML models
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                imageUrl:
+                  type: string
+                  description: URL of the wound image
+              required:
+                - imageUrl
+      responses:
+        '200':
+          description: Successful analysis
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  wound_size:
+                    type: number
+                    description: Size of wound in cm²
+                  infection_score:
+                    type: number
+                    minimum: 0
+                    maximum: 1
+                    description: Infection probability score
+                  abnormality:
+                    type: string
+                    description: Description of detected abnormalities
+                  recommendations:
+                    type: array
+                    items:
+                      type: string
+                    description: Treatment recommendations
+                  severity:
+                    type: string
+                    enum: [low, medium, high]
+                    description: Severity level
+                  confidence:
+                    type: number
+                    minimum: 0
+                    maximum: 1
+                    description: Model confidence score
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /ml/medicine:
+    post:
+      summary: Identify medicine from barcode
+      description: Get medicine information from barcode scan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                barcode:
+                  type: string
+                  description: Barcode number
+              required:
+                - barcode
+      responses:
+        '200':
+          description: Medicine information retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Medicine name
+                  dosage:
+                    type: string
+                    description: Dosage information
+                  manufacturer:
+                    type: string
+                    description: Manufacturer name
+                  expiry_date:
+                    type: string
+                    format: date
+                    description: Expiry date
+                  instructions:
+                    type: string
+                    description: Usage instructions
+                  side_effects:
+                    type: array
+                    items:
+                      type: string
+                    description: Potential side effects
+                  interactions:
+                    type: array
+                    items:
+                      type: string
+                    description: Drug interactions
+                  warnings:
+                    type: array
+                    items:
+                      type: string
+                    description: Safety warnings
+
+  /chat:
+    post:
+      summary: Send message to AI chat
+      description: Get AI response to health-related questions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: User message
+              required:
+                - message
+      responses:
+        '200':
+          description: AI response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: AI response text
+                  confidence:
+                    type: number
+                    minimum: 0
+                    maximum: 1
+                    description: Response confidence score
+
+  /health:
+    get:
+      summary: Health check
+      description: Check API health status
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: healthy
+                  version:
+                    type: string
+                    example: 1.0.0
