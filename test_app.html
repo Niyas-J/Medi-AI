@@ -353,6 +353,7 @@
             <div class="hero-buttons">
                 <button class="btn btn-primary" onclick="startAnalysis()">Start Analysis</button>
                 <button class="btn btn-secondary" onclick="openProductionApp()">Live Demo</button>
+                <button class="btn btn-secondary" onclick="openAppointmentScheduler()">Book Appointment</button>
                 <button class="btn btn-secondary" onclick="learnMore()">Learn More</button>
             </div>
         </section>
@@ -410,6 +411,9 @@
                     <div class="feature-icon">📅</div>
                     <h3>Appointment Management</h3>
                     <p>Schedule and manage medical appointments with intelligent reminders and calendar integration.</p>
+                    <div style="margin-top: 1rem;">
+                        <button class="api-btn" onclick="openAppointmentScheduler()" style="width: 100%; margin-top: 0.5rem;">Book Appointment</button>
+                    </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
@@ -539,6 +543,11 @@
         function startMedicineScan() {
             // Open the medicine scanner production app
             window.open('https://medilens-vision-guide.vercel.app/', '_blank');
+        }
+
+        function openAppointmentScheduler() {
+            // Open the appointment scheduler app
+            window.open('https://medi-appointment-scheduler-a0n00lzrq-niyas-js-projects.vercel.app', '_blank');
         }
 
         function openProductionApp() {
