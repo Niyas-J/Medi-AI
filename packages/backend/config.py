@@ -18,8 +18,11 @@ class Config:
     ENV = os.getenv('FLASK_ENV', 'development')
     
     # API Keys
-    OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
     GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', '')
+    
+    # External AI Chat Service
+    # TODO: Set this to your AI chat service URL
+    AI_CHAT_URL = os.getenv('AI_CHAT_URL', '')
     
     # Firebase Configuration
     FIREBASE_API_KEY = os.getenv('FIREBASE_API_KEY', '')
@@ -87,19 +90,8 @@ class Config:
     @classmethod
     def validate_required_keys(cls):
         """Validate that required API keys are present"""
-        required_keys = [
-            'OPENAI_API_KEY',
-            'GOOGLE_MAPS_API_KEY'
-        ]
-        
-        missing_keys = []
-        for key in required_keys:
-            if not getattr(cls, key):
-                missing_keys.append(key)
-        
-        if missing_keys:
-            raise ValueError(f"Missing required API keys: {', '.join(missing_keys)}")
-        
+        # Note: GOOGLE_MAPS_API_KEY is optional - location features work without it
+        # AI_CHAT_URL is optional - fallback responses will be used
         return True
 
 class DevelopmentConfig(Config):
