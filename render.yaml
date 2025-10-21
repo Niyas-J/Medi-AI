@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: medi-ai-dashboard
+    env: static
+    buildCommand: echo "No build needed - static HTML"
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
