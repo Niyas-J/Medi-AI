@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, send_from_directory, current_app
 import os
-import openai
+from openai import OpenAI
 import requests
 from .ml_models import process_wound_image  # Sample ML
 
@@ -54,18 +54,11 @@ def chat():
     message = data.get('message')
     
     try:
-        # Configure OpenAI
-        openai.api_key = current_app.config['OPENAI_API_KEY']
+        # Initialize OpenAI client with API key
+        client = OpenAI(api_key=current_app.config['OPENAI_API_KEY'])
         
-        # Create a medical-focused prompt
-        medical_prompt = f"""You are a helpful medical AI assistant. Please provide helpful, accurate, and safe medical information. 
-        
-        User question: {message}
-        
-        Please provide a helpful response while reminding the user to consult with healthcare professionals for medical advice."""
-        
-        # Call OpenAI API
-        response = openai.ChatCompletion.create(
+        # Call OpenAI API with new syntax
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful medical AI assistant. Provide accurate, safe medical information and always recommend consulting healthcare professionals."},
@@ -86,10 +79,27 @@ def chat():
         
     except Exception as e:
         # Fallback response if OpenAI API fails
+        # Provide a helpful fallback message for common medical questions
+        fallback_responses = {
+            'cold': 'Common cold symptoms include: runny or stuffy nose, sore throat, cough, congestion, slight body aches, mild headache, sneezing, low-grade fever, and general malaise. Rest, stay hydrated, and consider over-the-counter medications. However, please consult with a healthcare professional for proper diagnosis and treatment.',
+            'fever': 'Fever is generally a temperature above 100.4°F (38°C). It can be caused by various conditions including infections. Stay hydrated, rest, and use fever-reducing medications if recommended. Seek medical attention if fever persists for more than 3 days or exceeds 103°F (39.4°C).',
+            'headache': 'Headaches can have many causes. Stay hydrated, rest in a quiet dark room, and consider over-the-counter pain relievers. If headaches are severe, persistent, or accompanied by other symptoms, please consult a healthcare professional.',
+        }
+        
+        # Try to match keywords for fallback response
+        response_text = None
+        for keyword, response in fallback_responses.items():
+            if keyword in message.lower():
+                response_text = response
+                break
+        
+        if not response_text:
+            response_text = f'I apologize, but the AI service is temporarily unavailable. Your question was: "{message}". For medical advice and information, please consult with a qualified healthcare professional who can provide personalized guidance based on your specific situation.'
+        
         result = {
-            'response': f'I apologize, but I encountered an error processing your request: "{message}". Please try again or consult with a healthcare professional.',
-            'confidence': 0.5,
-            'error': str(e),
+            'response': response_text,
+            'confidence': 0.7,
+            'note': 'This is a fallback response. The AI service is temporarily unavailable.',
             'timestamp': '2024-01-01T00:00:00Z'
         }
     
