@@ -1,60 +1,19 @@
-# Vercel deployment - ignore unnecessary files
-
-# Node modules
-node_modules/
-packages/mobile/node_modules/
-packages/web/node_modules/
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-venv/
-env/
-ENV/
-
-# Development files
-.git/
-.github/
-.vscode/
-.idea/
-
-# Documentation
-docs/
+# Ignore everything except index.html
+packages/
+api/
+*.py
 *.md
 !README.md
-!VERCEL_DEPLOYMENT.md
-
-# Tests
-tests/
-*.test.js
-*.spec.js
-
-# Mobile and Web packages (backend only)
-packages/mobile/
-packages/web/
-
-# Scripts
-scripts/
-start_all_services.ps1
-test_services.py
-
-# Environment files
-.env
-*.env
-!environment.env
-
-# Logs
-*.log
-logs/
-
-# Other
-.DS_Store
-test_app.html
+requirements.txt
 Dockerfile
 .dockerignore
 railway.toml
 .nixpacksignore
-
+test_app.html
+test_services.py
+start_all_services.ps1
+.git/
+.github/
+node_modules/
+environment.env
+.env
