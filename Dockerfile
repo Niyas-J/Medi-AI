@@ -1,3 +1,7 @@
+# Medi-AI Suite Backend Deployment
+# Railway: This Dockerfile should be auto-detected
+# If Railway tries to use Nixpacks, check railway.toml configuration
+
 # Use official Python runtime as base image
 FROM python:3.11-slim
 
