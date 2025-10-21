@@ -127,9 +127,18 @@ def get_location_info():
     if not lat or not lng:
         return jsonify({'error': 'Latitude and longitude are required'}), 400
     
+    # Check if Google Maps API key is configured
+    api_key = current_app.config.get('GOOGLE_MAPS_API_KEY')
+    if not api_key:
+        return jsonify({
+            'error': 'Location services not configured',
+            'message': 'Google Maps API key is required for location services',
+            'coordinates': {'lat': lat, 'lng': lng}
+        }), 503
+    
     try:
         # Use Google Geocoding API to get location details
-        geocoding_url = f"https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lng}&key={current_app.config['GOOGLE_MAPS_API_KEY']}"
+        geocoding_url = f"https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lng}&key={api_key}"
         response = requests.get(geocoding_url)
         geocoding_data = response.json()
         
@@ -158,9 +167,18 @@ def get_nearby_hospitals():
     if not lat or not lng:
         return jsonify({'error': 'Latitude and longitude are required'}), 400
     
+    # Check if Google Maps API key is configured
+    api_key = current_app.config.get('GOOGLE_MAPS_API_KEY')
+    if not api_key:
+        return jsonify({
+            'error': 'Location services not configured',
+            'message': 'Google Maps API key is required for finding nearby hospitals',
+            'coordinates': {'lat': lat, 'lng': lng}
+        }), 503
+    
     try:
         # Use Google Places API to find nearby hospitals
-        places_url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat},{lng}&radius={radius}&type=hospital&key={current_app.config['GOOGLE_MAPS_API_KEY']}"
+        places_url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat},{lng}&radius={radius}&type=hospital&key={api_key}"
         response = requests.get(places_url)
         places_data = response.json()
         
@@ -197,9 +215,18 @@ def get_nearby_pharmacies():
     if not lat or not lng:
         return jsonify({'error': 'Latitude and longitude are required'}), 400
     
+    # Check if Google Maps API key is configured
+    api_key = current_app.config.get('GOOGLE_MAPS_API_KEY')
+    if not api_key:
+        return jsonify({
+            'error': 'Location services not configured',
+            'message': 'Google Maps API key is required for finding nearby pharmacies',
+            'coordinates': {'lat': lat, 'lng': lng}
+        }), 503
+    
     try:
         # Use Google Places API to find nearby pharmacies
-        places_url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat},{lng}&radius={radius}&type=pharmacy&key={current_app.config['GOOGLE_MAPS_API_KEY']}"
+        places_url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat},{lng}&radius={radius}&type=pharmacy&key={api_key}"
         response = requests.get(places_url)
         places_data = response.json()
         

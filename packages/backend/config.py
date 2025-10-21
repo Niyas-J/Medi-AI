@@ -17,50 +17,15 @@ class Config:
     DEBUG = os.getenv('FLASK_DEBUG', 'True').lower() == 'true'
     ENV = os.getenv('FLASK_ENV', 'development')
     
-    # API Keys
-    GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', '')
-    
-    # External AI Chat Service
-    # TODO: Set this to your AI chat service URL
+    # External Services - All optional, app works without them
     AI_CHAT_URL = os.getenv('AI_CHAT_URL', '')
-    
-    # Firebase Configuration
-    FIREBASE_API_KEY = os.getenv('FIREBASE_API_KEY', '')
-    FIREBASE_AUTH_DOMAIN = os.getenv('FIREBASE_AUTH_DOMAIN', '')
-    FIREBASE_PROJECT_ID = os.getenv('FIREBASE_PROJECT_ID', '')
-    FIREBASE_STORAGE_BUCKET = os.getenv('FIREBASE_STORAGE_BUCKET', '')
-    FIREBASE_MESSAGING_SENDER_ID = os.getenv('FIREBASE_MESSAGING_SENDER_ID', '')
-    FIREBASE_APP_ID = os.getenv('FIREBASE_APP_ID', '')
-    FIREBASE_MEASUREMENT_ID = os.getenv('FIREBASE_MEASUREMENT_ID', '')
+    GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', '')
     
     # Database Configuration
     DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///medi_ai_suite.db')
     
-    # Blockchain Configuration
-    INFURA_KEY = os.getenv('INFURA_KEY', '')
-    
-    # API URLs
-    FLASK_API_URL = os.getenv('FLASK_API_URL', 'http://localhost:5000/api')
-    PRODUCTION_API_URL = os.getenv('PRODUCTION_API_URL', '')
-    
     # CORS Configuration
     CORS_ORIGINS = os.getenv('CORS_ORIGINS', 'http://localhost:3000,http://localhost:5173,http://localhost:8081').split(',')
-    
-    # Security
-    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'jwt-secret-key-change-in-production')
-    ENCRYPTION_KEY = os.getenv('ENCRYPTION_KEY', 'encryption-key-change-in-production')
-    
-    # External Services
-    GOOGLE_CLOUD_PROJECT_ID = os.getenv('GOOGLE_CLOUD_PROJECT_ID', '')
-    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
-    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
-    AWS_REGION = os.getenv('AWS_REGION', 'us-east-1')
-    
-    # Email Configuration
-    SMTP_HOST = os.getenv('SMTP_HOST', 'smtp.gmail.com')
-    SMTP_PORT = int(os.getenv('SMTP_PORT', '587'))
-    SMTP_USERNAME = os.getenv('SMTP_USERNAME', '')
-    SMTP_PASSWORD = os.getenv('SMTP_PASSWORD', '')
     
     # File Upload Configuration
     MAX_FILE_SIZE = int(os.getenv('MAX_FILE_SIZE', '10485760'))  # 10MB
@@ -73,26 +38,6 @@ class Config:
     # Logging
     LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')
     LOG_FILE = os.getenv('LOG_FILE', 'logs/medi-ai-suite.log')
-    
-    @classmethod
-    def get_firebase_config(cls):
-        """Get Firebase configuration as dictionary"""
-        return {
-            'apiKey': cls.FIREBASE_API_KEY,
-            'authDomain': cls.FIREBASE_AUTH_DOMAIN,
-            'projectId': cls.FIREBASE_PROJECT_ID,
-            'storageBucket': cls.FIREBASE_STORAGE_BUCKET,
-            'messagingSenderId': cls.FIREBASE_MESSAGING_SENDER_ID,
-            'appId': cls.FIREBASE_APP_ID,
-            'measurementId': cls.FIREBASE_MEASUREMENT_ID
-        }
-    
-    @classmethod
-    def validate_required_keys(cls):
-        """Validate that required API keys are present"""
-        # Note: GOOGLE_MAPS_API_KEY is optional - location features work without it
-        # AI_CHAT_URL is optional - fallback responses will be used
-        return True
 
 class DevelopmentConfig(Config):
     """Development configuration"""

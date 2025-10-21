@@ -18,14 +18,10 @@ def create_app(config_name=None):
     config_name = config_name or os.getenv('FLASK_ENV', 'development')
     app.config.from_object(config[config_name])
     
-    # Validate required API keys
-    try:
-        config[config_name].validate_required_keys()
-    except ValueError as e:
-        print(f"Warning: {e}")
-    
+    # Enable CORS for all origins specified in config
     CORS(app, origins=app.config['CORS_ORIGINS'])
     
+    # Register routes
     from .routes import main as main_blueprint
     app.register_blueprint(main_blueprint)
     
