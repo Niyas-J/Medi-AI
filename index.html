@@ -7,7 +7,7 @@
     <meta name="keywords" content="medical AI, wound detection, medicine scanner, health assistant, appointment booking">
     <meta name="author" content="Medi-AI Suite">
     <title>Medi-AI Suite - AI-Powered Medical Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩺</text></svg>">
     <style>
         * {
@@ -16,21 +16,80 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-bg: #0a0e27;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --glow-color: rgba(102, 126, 234, 0.5);
         }
         
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--dark-bg);
+        }
+        
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+            top: -250px;
+            left: -250px;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .animated-bg::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.15) 0%, transparent 70%);
+            bottom: -200px;
+            right: -200px;
+            animation: float 15s infinite ease-in-out reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(100px, -100px) scale(1.1);
+            }
+            66% {
+                transform: translate(-100px, 100px) scale(0.9);
+            }
+        }
+        
+        /* Navbar */
         .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 1.2rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
             position: fixed;
             top: 0;
             left: 0;
@@ -40,326 +99,725 @@
         
         .logo {
             font-size: 1.5rem;
-            font-weight: 700;
-            color: #667eea;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            letter-spacing: -0.5px;
         }
         
         .logo-icon {
-            font-size: 1.8rem;
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px var(--glow-color));
         }
         
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
+            align-items: center;
         }
         
         .nav-links a {
             text-decoration: none;
-            color: #666;
+            color: var(--text-secondary);
             font-weight: 500;
-            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            transition: width 0.3s ease;
         }
         
         .nav-links a:hover {
-            color: #667eea;
+            color: var(--text-primary);
         }
         
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-btn {
+            padding: 0.7rem 1.5rem;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Main content */
         .main-content {
             margin-top: 80px;
-            padding: 2rem;
+            padding: 3rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
+        /* Hero section */
         .hero {
             text-align: center;
-            padding: 4rem 0;
-            color: white;
+            padding: 5rem 0 4rem;
+            position: relative;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
         }
         
         .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
         }
         
-        .features {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 0;
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
         }
         
-        .features h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        .cta-btn-primary {
+            padding: 1rem 2.5rem;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 12px;
             color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .cta-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+        
+        .cta-btn-secondary {
+            padding: 1rem 2.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .cta-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* Stats section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 4rem 0;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+        
+        .stat-card:hover::before {
+            opacity: 0.1;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+        }
+        
+        /* Features section */
+        .features-section {
+            margin: 6rem 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-tag {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+        
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
         }
         
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
         }
         
         .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
             cursor: pointer;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--primary-gradient);
+            border-radius: 24px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
         }
         
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+        
+        .feature-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
         }
         
         .feature-icon {
             font-size: 3rem;
-            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 10px var(--glow-color));
+        }
+        
+        .status-badge {
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-live {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            animation: pulse-glow 2s infinite;
+        }
+        
+        .status-soon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 25px rgba(16, 185, 129, 0.6);
+            }
         }
         
         .feature-card h3 {
             font-size: 1.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
-            color: #333;
+            color: var(--text-primary);
         }
         
         .feature-card p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
         }
         
         .feature-btn {
-            display: inline-block;
-            padding: 0.8rem 2rem;
-            background: #667eea;
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
             color: white;
             text-decoration: none;
-            border-radius: 50px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            width: 100%;
             text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
         
         .feature-btn:hover {
-            background: #5a6fd8;
+            background: rgba(255, 255, 255, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
         
-        .badge {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background: #4ade80;
-            color: white;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-left: 0.5rem;
-            animation: pulse 2s infinite;
+        .feature-card:hover .feature-btn {
+            background: white;
+            color: #0a0e27;
         }
         
-        .badge-coming-soon {
-            background: #fbbf24;
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-        
-        .stats-section {
-            max-width: 1200px;
-            margin: 3rem auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            padding: 0 2rem;
-        }
-        
-        .stat-box {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .stat-box:hover {
-            transform: translateY(-5px);
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            color: #666;
-            font-weight: 500;
-        }
-        
+        /* Footer */
         .footer {
-            text-align: center;
-            padding: 2rem;
-            color: white;
-            margin-top: 4rem;
+            margin-top: 8rem;
+            padding: 4rem 3rem 2rem;
+            border-top: 1px solid var(--card-border);
+            background: rgba(10, 14, 39, 0.5);
+            backdrop-filter: blur(10px);
         }
         
-        .footer a {
-            color: white;
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand {
+            max-width: 300px;
+        }
+        
+        .footer-brand .logo {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
             text-decoration: none;
-            margin: 0 1rem;
-            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
         }
         
-        .footer a:hover {
-            text-decoration: underline;
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+        
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
         }
         
         @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .main-content {
+                padding: 2rem 1.5rem;
+            }
+            
             .hero h1 {
                 font-size: 2.5rem;
             }
-        
-            .nav-links {
-                display: none;
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .cta-btn-primary,
+            .cta-btn-secondary {
+                width: 100%;
+            }
+            
+            .section-title {
+                font-size: 2rem;
             }
             
             .features-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="animated-bg"></div>
+
     <nav class="navbar">
         <div class="logo">
             <span class="logo-icon">🩺</span>
-            Medi-AI Suite
+            MEDI-AI
         </div>
         <ul class="nav-links">
             <li><a href="#features">Services</a></li>
-            <li><a href="#stats">Stats</a></li>
+            <li><a href="#stats">Statistics</a></li>
             <li><a href="#about">About</a></li>
+            <li><button class="nav-btn" onclick="window.location.href='#features'">Get Started</button></li>
         </ul>
     </nav>
 
     <div class="main-content">
         <section class="hero">
-            <h1>AI-Powered Medical Platform 🩺</h1>
-            <p>Your Complete Healthcare Solution - All in One Dashboard</p>
+            <div class="hero-badge">🚀 AI-Powered Healthcare Platform</div>
+            <h1>
+                Transform Healthcare with<br>
+                <span class="gradient-text">Artificial Intelligence</span>
+            </h1>
+            <p>
+                Access cutting-edge medical AI tools all in one unified platform. From wound detection to AI health assistance, we've got you covered 24/7.
+            </p>
+            <div class="hero-cta">
+                <button class="cta-btn-primary" onclick="window.location.href='#features'">Explore Services</button>
+                <button class="cta-btn-secondary" onclick="window.location.href='#about'">Learn More</button>
+            </div>
         </section>
 
-        <section class="stats-section" id="stats">
-            <div class="stat-box">
+        <section class="stats-container" id="stats">
+            <div class="stat-card">
                 <div class="stat-number">4</div>
-                <div class="stat-label">Active Services</div>
+                <div class="stat-label">Active AI Services</div>
             </div>
-            <div class="stat-box">
+            <div class="stat-card">
                 <div class="stat-number">24/7</div>
                 <div class="stat-label">Availability</div>
             </div>
-            <div class="stat-box">
+            <div class="stat-card">
                 <div class="stat-number">100%</div>
                 <div class="stat-label">AI-Powered</div>
             </div>
-            <div class="stat-box">
+            <div class="stat-card">
                 <div class="stat-number">∞</div>
                 <div class="stat-label">Possibilities</div>
             </div>
         </section>
 
-        <section class="features" id="features">
-            <h2>Access Our AI Solutions</h2>
-            <p style="text-align: center; color: white; margin-bottom: 3rem; opacity: 0.9;">Click on any service to get started</p>
+        <section class="features-section" id="features">
+            <div class="section-header">
+                <div class="section-tag">OUR SERVICES</div>
+                <h2 class="section-title">AI-Powered Medical Solutions</h2>
+                <p class="section-description">
+                    Comprehensive suite of medical AI tools designed to enhance healthcare delivery and patient outcomes
+                </p>
+            </div>
+
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3>AI Wound Detection<span class="badge">LIVE</span></h3>
-                    <p>Advanced AI-powered wound analysis and assessment system. Get instant analysis and treatment recommendations.</p>
-                    <a href="https://mediscan-ai-production.up.railway.app/" target="_blank" class="feature-btn">Open Wound Scanner</a>
+                <div class="feature-card" onclick="window.open('https://mediscan-ai-production.up.railway.app/', '_blank')">
+                    <div class="feature-header">
+                        <div class="feature-icon">🤖</div>
+                        <span class="status-badge status-live">LIVE</span>
+                    </div>
+                    <h3>AI Wound Detection</h3>
+                    <p>Advanced computer vision AI that analyzes wound images to provide instant assessment, severity classification, and treatment recommendations with clinical accuracy.</p>
+                    <a href="https://mediscan-ai-production.up.railway.app/" target="_blank" class="feature-btn">Launch Scanner →</a>
+                </div>
+
+                <div class="feature-card" onclick="window.open('https://meditab-heph9wlg5-niyas-js-projects.vercel.app', '_blank')">
+                    <div class="feature-header">
+                        <div class="feature-icon">📱</div>
+                        <span class="status-badge status-live">LIVE</span>
+                    </div>
+                    <h3>Medicine Scanner</h3>
+                    <p>Scan and identify medications instantly using AI. Get comprehensive information about dosage, interactions, side effects, and contraindications in seconds.</p>
+                    <a href="https://meditab-heph9wlg5-niyas-js-projects.vercel.app" target="_blank" class="feature-btn">Scan Medicine →</a>
+                </div>
+
+                <div class="feature-card" onclick="window.open('https://medi-appointment-scheduler-a0n00lzrq-niyas-js-projects.vercel.app', '_blank')">
+                    <div class="feature-header">
+                        <div class="feature-icon">📅</div>
+                        <span class="status-badge status-live">LIVE</span>
+                    </div>
+                    <h3>Smart Appointment System</h3>
+                    <p>Intelligent scheduling system with AI-powered appointment management, automated reminders, and seamless calendar integration for healthcare providers.</p>
+                    <a href="https://medi-appointment-scheduler-a0n00lzrq-niyas-js-projects.vercel.app" target="_blank" class="feature-btn">Book Appointment →</a>
+                </div>
+
+                <div class="feature-card" onclick="window.open('https://medi-chat-416gka3w2-niyas-js-projects.vercel.app/', '_blank')">
+                    <div class="feature-header">
+                        <div class="feature-icon">💬</div>
+                        <span class="status-badge status-live">LIVE</span>
+                    </div>
+                    <h3>AI Health Assistant</h3>
+                    <p>24/7 medical AI chatbot trained on extensive healthcare data. Get instant answers to health questions, symptom analysis, and general medical guidance.</p>
+                    <a href="https://medi-chat-416gka3w2-niyas-js-projects.vercel.app/" target="_blank" class="feature-btn">Chat Now →</a>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Medicine Scanner<span class="badge">LIVE</span></h3>
-                    <p>Scan and identify medications instantly. Get detailed information about dosage, interactions, and side effects.</p>
-                    <a href="https://meditab-heph9wlg5-niyas-js-projects.vercel.app" target="_blank" class="feature-btn">Open Medicine Scanner</a>
+                    <div class="feature-header">
+                        <div class="feature-icon">🚨</div>
+                        <span class="status-badge status-soon">COMING SOON</span>
+                    </div>
+                    <h3>Emergency Response</h3>
+                    <p>Real-time emergency service integration with GPS location sharing, automated ambulance dispatch, and instant connection to nearest medical facilities.</p>
+                    <button class="feature-btn" onclick="alert('Emergency Response system launching soon! Stay tuned for updates.')">Notify Me →</button>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">📅</div>
-                    <h3>Appointment Scheduler<span class="badge">LIVE</span></h3>
-                    <p>Book and manage your medical appointments easily. Smart scheduling with automated reminders.</p>
-                    <a href="https://medi-appointment-scheduler-a0n00lzrq-niyas-js-projects.vercel.app" target="_blank" class="feature-btn">Book Appointment</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <h3>AI Health Assistant<span class="badge">LIVE</span></h3>
-                    <p>Get instant health advice and guidance from our intelligent AI assistant available 24/7.</p>
-                    <a href="https://medi-chat-416gka3w2-niyas-js-projects.vercel.app/" target="_blank" class="feature-btn">Open AI Chat</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🚨</div>
-                    <h3>Emergency Response<span class="badge badge-coming-soon">COMING SOON</span></h3>
-                    <p>Quick access to emergency services with location sharing for rapid medical response.</p>
-                    <button class="feature-btn" onclick="showComingSoon('Emergency Response')">Notify Me</button>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Health Analytics<span class="badge badge-coming-soon">COMING SOON</span></h3>
-                    <p>Track and analyze your health data with comprehensive insights and visualizations.</p>
-                    <button class="feature-btn" onclick="showComingSoon('Health Analytics')">Notify Me</button>
+                    <div class="feature-header">
+                        <div class="feature-icon">📊</div>
+                        <span class="status-badge status-soon">COMING SOON</span>
+                    </div>
+                    <h3>Health Analytics Dashboard</h3>
+                    <p>Comprehensive health data tracking and visualization. Monitor vital signs, medication adherence, and health trends with AI-powered insights and predictions.</p>
+                    <button class="feature-btn" onclick="alert('Health Analytics launching soon! Get ready for powerful insights.')">Notify Me →</button>
                 </div>
             </div>
         </section>
-
-        <section class="footer" id="about">
-            <h3 style="margin-bottom: 1rem;">Medi-AI Suite</h3>
-            <p style="max-width: 600px; margin: 0 auto 2rem;">
-                Transforming healthcare with AI-powered solutions. Access all your medical tools in one place.
-            </p>
-            <a href="https://github.com/Niyas-J/Medi-AI" target="_blank">GitHub</a>
-            <a href="#features">Services</a>
-            <a href="#about">About</a>
-            <p style="margin-top: 2rem; opacity: 0.8;">© 2024 Medi-AI Suite. All rights reserved.</p>
-        </section>
     </div>
 
-    <script>
-        function showComingSoon(feature) {
-            alert(feature + ' is coming soon! Stay tuned for updates.');
-        }
+    <footer class="footer" id="about">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <span class="logo-icon">🩺</span>
+                    MEDI-AI
+                </div>
+                <p>
+                    Transforming healthcare delivery through advanced artificial intelligence. Making medical expertise accessible to everyone, everywhere.
+                </p>
+                <div class="social-links">
+                    <a href="https://github.com/Niyas-J/Medi-AI" target="_blank" title="GitHub">⚡</a>
+                    <a href="#" title="Twitter">🐦</a>
+                    <a href="#" title="LinkedIn">💼</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="https://mediscan-ai-production.up.railway.app/" target="_blank">Wound Detection</a></li>
+                    <li><a href="https://meditab-heph9wlg5-niyas-js-projects.vercel.app" target="_blank">Medicine Scanner</a></li>
+                    <li><a href="https://medi-appointment-scheduler-a0n00lzrq-niyas-js-projects.vercel.app" target="_blank">Appointments</a></li>
+                    <li><a href="https://medi-chat-416gka3w2-niyas-js-projects.vercel.app/" target="_blank">AI Assistant</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#stats">Statistics</a></li>
+                    <li><a href="https://github.com/Niyas-J/Medi-AI" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">HIPAA Compliance</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2024 Medi-AI Suite. All rights reserved. Built with ❤️ for better healthcare.</p>
+            <p>Powered by Artificial Intelligence</p>
+        </div>
+    </footer>
 
-        // Smooth scroll for navigation
+    <script>
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -373,8 +831,12 @@
             });
         });
 
-        // Add animation on scroll
-        const cards = document.querySelectorAll('.feature-card');
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -382,15 +844,25 @@
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, { threshold: 0.1 });
+        }, observerOptions);
 
-        cards.forEach(card => {
+        // Animate cards on scroll
+        document.querySelectorAll('.feature-card, .stat-card').forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(30px)';
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(card);
         });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                hero.style.opacity = 1 - scrolled / 500;
+            }
+        });
     </script>
 </body>
 </html>
-
