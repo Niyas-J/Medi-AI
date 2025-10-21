@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medi-AI Suite Dashboard</title>
+    <meta name="description" content="Medi-AI Suite - Your complete AI-powered medical platform. Access wound detection, medicine scanning, appointments, and AI health assistance all in one place.">
+    <meta name="keywords" content="medical AI, wound detection, medicine scanner, health assistant, appointment booking">
+    <meta name="author" content="Medi-AI Suite">
+    <title>Medi-AI Suite - AI-Powered Medical Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩺</text></svg>">
     <style>
         * {
             margin: 0;
@@ -38,6 +42,13 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 1.8rem;
         }
         
         .nav-links {
@@ -150,6 +161,66 @@
         .feature-btn:hover {
             background: #5a6fd8;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: #4ade80;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        .badge-coming-soon {
+            background: #fbbf24;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .stats-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+        
+        .stat-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-weight: 500;
         }
         
         .footer {
@@ -187,9 +258,13 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">Medi-AI Suite</div>
+        <div class="logo">
+            <span class="logo-icon">🩺</span>
+            Medi-AI Suite
+        </div>
         <ul class="nav-links">
-            <li><a href="#features">Features</a></li>
+            <li><a href="#features">Services</a></li>
+            <li><a href="#stats">Stats</a></li>
             <li><a href="#about">About</a></li>
         </ul>
     </nav>
@@ -200,50 +275,69 @@
             <p>Your Complete Healthcare Solution - All in One Dashboard</p>
         </section>
 
+        <section class="stats-section" id="stats">
+            <div class="stat-box">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Active Services</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Availability</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">AI-Powered</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Possibilities</div>
+            </div>
+        </section>
+
         <section class="features" id="features">
             <h2>Access Our AI Solutions</h2>
             <p style="text-align: center; color: white; margin-bottom: 3rem; opacity: 0.9;">Click on any service to get started</p>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🤖</div>
-                    <h3>AI Wound Detection</h3>
+                    <h3>AI Wound Detection<span class="badge">LIVE</span></h3>
                     <p>Advanced AI-powered wound analysis and assessment system. Get instant analysis and treatment recommendations.</p>
                     <a href="https://mediscan-ai-production.up.railway.app/" target="_blank" class="feature-btn">Open Wound Scanner</a>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">📱</div>
-                    <h3>Medicine Scanner</h3>
+                    <h3>Medicine Scanner<span class="badge">LIVE</span></h3>
                     <p>Scan and identify medications instantly. Get detailed information about dosage, interactions, and side effects.</p>
                     <a href="https://medilens-vision-guide.vercel.app/" target="_blank" class="feature-btn">Open Medicine Scanner</a>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">📅</div>
-                    <h3>Appointment Scheduler</h3>
+                    <h3>Appointment Scheduler<span class="badge">LIVE</span></h3>
                     <p>Book and manage your medical appointments easily. Smart scheduling with automated reminders.</p>
                     <a href="https://medi-appointment-scheduler-a0n00lzrq-niyas-js-projects.vercel.app" target="_blank" class="feature-btn">Book Appointment</a>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">💬</div>
-                    <h3>AI Health Assistant</h3>
+                    <h3>AI Health Assistant<span class="badge">LIVE</span></h3>
                     <p>Get instant health advice and guidance from our intelligent AI assistant available 24/7.</p>
                     <a href="https://medi-chat-416gka3w2-niyas-js-projects.vercel.app/" target="_blank" class="feature-btn">Open AI Chat</a>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🚨</div>
-                    <h3>Emergency Response</h3>
+                    <h3>Emergency Response<span class="badge badge-coming-soon">COMING SOON</span></h3>
                     <p>Quick access to emergency services with location sharing for rapid medical response.</p>
-                    <button class="feature-btn" onclick="showComingSoon('Emergency Response')">Coming Soon</button>
+                    <button class="feature-btn" onclick="showComingSoon('Emergency Response')">Notify Me</button>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
-                    <h3>Health Analytics</h3>
+                    <h3>Health Analytics<span class="badge badge-coming-soon">COMING SOON</span></h3>
                     <p>Track and analyze your health data with comprehensive insights and visualizations.</p>
-                    <button class="feature-btn" onclick="showComingSoon('Health Analytics')">Coming Soon</button>
+                    <button class="feature-btn" onclick="showComingSoon('Health Analytics')">Notify Me</button>
                 </div>
             </div>
         </section>
