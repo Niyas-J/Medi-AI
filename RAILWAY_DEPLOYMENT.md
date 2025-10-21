@@ -71,11 +71,14 @@ Test your endpoints:
 
 ## Configuration Files
 
-### `nixpacks.toml`
-Tells Railway how to build and run the backend:
-- Uses Python 3.13
-- Installs dependencies from `packages/backend/requirements.txt`
-- Starts the Flask app with `python run.py`
+### `Dockerfile`
+Railway will automatically detect and use this Dockerfile:
+- Uses Python 3.11-slim base image
+- Installs system dependencies (gcc for Python packages)
+- Installs Python dependencies from `packages/backend/requirements.txt`
+- Copies the backend application
+- Exposes port 5000 (Railway will set the actual PORT)
+- Runs the Flask application with `python run.py`
 
 ### `Procfile`
 Alternative configuration for platforms like Heroku:
@@ -83,19 +86,23 @@ Alternative configuration for platforms like Heroku:
 web: cd packages/backend && python run.py
 ```
 
-### `railway.json`
-Railway-specific configuration for build and deploy commands.
+### `.dockerignore`
+Excludes unnecessary files from the Docker build:
+- Frontend packages (mobile, web)
+- Development files and documentation
+- Node modules and test files
+- Reduces build size and speeds up deployment
 
 ## Troubleshooting
 
-### Build Fails with "yarn not found"
-✅ **Fixed** - The build script now skips frontend builds for backend-only deployment.
+### Build Fails with "yarn not found" or Nixpacks errors
+✅ **Fixed** - Now using a standard Dockerfile instead of Nixpacks.
 
 ### Port Issues
-Railway automatically sets the `PORT` environment variable. Make sure your Flask app uses it:
+✅ **Fixed** - The Flask app automatically uses Railway's PORT environment variable:
 ```python
 port = int(os.environ.get('PORT', 5000))
-app.run(host='0.0.0.0', port=port)
+app.run(host='0.0.0.0', port=port, debug=debug)
 ```
 
 ### CORS Errors
